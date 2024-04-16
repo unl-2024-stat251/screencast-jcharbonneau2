@@ -1,23 +1,23 @@
 ---
-author: "Your Name"
+author: "Jo Charbonneau"
 date: "2023-04-18"
 title: "Project Dataset and Topics"
 output: html
 categories: project
 ---
 
-[Link to dataset]()
+[Link to dataset](https://github.com/rfordatascience/tidytuesday/tree/1b43aa2f3f3eed83589b21f99bf7f20111934ac5/data/2020/2020-05-05/villagerdb-master)
 
 Things you plan to investigate using this dataset:
 
-- Thing 1
-- Thing 2
-- Thing 3
+- The species of the villager in relation to other variables (gender, personality?)
+- The relationship between the reviews and the date at which they are posted
+- The category of the furniture and the buy_value 
 
 Stat 251 topics you plan to cover during the analysis:
 
-1. Topic 1
-2. Topic 2
-3. Topic 3
-4. Topic 4
+1. Tidying data (removing NA's, putting data in order, etc.)
+2. ggplot (plotting the data)
+3. Data wrangling and joining columns and rows
+4. using lubridate
 
