@@ -1,8 +1,58 @@
 ---
-author: "Your Name"
+author: "Jo Charbonneau"
 date: "2023-04-20"
 title: "Screencast Pseudocode"
 output: html
 categories: project
 ---
 
+```{r}
+## find the relationship between the category of the furniture and buy value 
+
+critic <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv')
+user_reviews <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv')
+items <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv')
+villagers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv')
+
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+
+items_cost <- items %>%
+  select(category, buy_value) %>%
+  group_by(category) %>%
+  na.omit() %>%
+  summarize_all(sum) ## sum altogether and find a way to round to the nearest whole number to make graphing easier to read and more concise
+
+items_plot <- #graph the relationship between the category and the buy_value making sure the numbers are measured in thousands
+```
+
+
+```{r}
+##find the relationship between reviews and the date at which they were posted
+
+reviews <- user_reviews %>%
+  select(grade, date) %>% ##obtain only the year from this data
+  mutate(year = ymd(date))
+
+reviews_plot <- ggplot(reviews, aes(x = year, y = grade)) +
+  geom_line() #plot the relationship between the grade and the year of the review
+
+```
+
+
+```{r}
+## the relationship between species and personality
+
+ac_villagers <- villagers %>%
+  select(species, personality) %>%
+  group_by(species) %>%
+  mutate(count = sum(personality))
+#get a count for each personality with species
+
+
+# graph the relationship using ggplot2
+##maybe discover other relationships between species? possibly making a separate graph for each? The first thing I thought of was to do a single variable and then possibly work from there
+  
+
+```
