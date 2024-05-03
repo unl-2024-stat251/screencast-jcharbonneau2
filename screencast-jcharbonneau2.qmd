@@ -1,0 +1,100 @@
+---
+author: "Jo Charbonneau"
+title: "Screencast"
+output: html
+categories: project
+---
+
+```{r}
+library(tidyverse)
+
+critic <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv')
+user_reviews <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv')
+items <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv')
+villagers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv')
+
+
+```
+
+```{r}
+
+items_price <- items %>%
+  select(category, buy_value) %>%
+  na.omit() %>%
+  group_by(category) %>%
+  summarize(buy_value = round(sum(buy_value)/1000))
+
+items_plot <- ggplot(items_price, aes(x=category, y = buy_value)) +
+  geom_col() +
+  labs(
+    title = 'Items Buy Value',
+    x = 'Category',
+    y = 'Buy Value'
+  ) +
+  theme(axis.text.x = element_text(angle = 90))
+
+items_plot
+
+```
+
+
+```{r}
+library(lubridate)
+
+user_reviews$date <- ymd(user_reviews$date)
+
+user_reviews$month <- month(user_reviews$date)
+
+user_reviews$day <- day(user_reviews$date)
+
+reviews <- user_reviews %>%
+  select(grade, date) %>%
+  group_by(date) %>%
+  mutate(avg_grade = mean(grade, na.rm = TRUE)) %>%
+  distinct(avg_grade, date)
+
+reviews_plot <- ggplot(reviews, aes(x = date, y = avg_grade)) +
+  geom_line() +
+  labs(
+    title = 'Average User Review in 2020',
+    x = 'Date',
+    y = 'Average Grade'
+  )
+
+reviews_plot
+
+
+critic$date <- ymd(critic$date)
+
+critic_review <- critic %>%
+  select(grade, date) %>%
+  group_by(date) %>%
+  mutate(avg_grade = mean(grade, na.rm = TRUE)) %>%
+  distinct(avg_grade, date)
+
+critic_plot <- ggplot(critic_review, aes(x = date, y = avg_grade)) +
+  geom_line()
+
+critic_plot
+
+````
+
+
+```{r}
+
+ac_villager <- villagers %>%
+  select(species, personality) %>%
+  na.omit() %>%
+  arrange(species)
+
+ac_villager2 <- ac_villager %>%
+  group_by(species, personality) %>%
+  summarize(count = n())
+
+personality_graph <- ggplot(ac_villager2, aes(x = personality, y = count)) +
+  geom_col() +
+  facet_wrap(~species) + theme(axis.text.x = element_text(angle = 60))
+
+personality_graph
+
+```
