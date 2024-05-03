@@ -1,7 +1,5 @@
 ---
 title: "Time Stamps"
-format: html
-editor: visual
 ---
 
 0:00 - Intro
